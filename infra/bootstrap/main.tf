@@ -28,7 +28,7 @@ provider "azurerm" {
 }
 
 module "bootstrap" {
-  source              = "git::https://github.com/companygraph/mcp-server.git//deploy/azure/bootstrap?ref=v0.74.0"
+  source              = "git::https://github.com/companygraph/mcp-server.git//deploy/azure/bootstrap?ref=v0.74.1"
   resource_group_name = local.d.resource_group
   location            = local.d.location
   state_account       = local.d.state_account

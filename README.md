@@ -57,7 +57,6 @@ The record of how the deployment was stood up: the owner's steps, done once, in 
         terraform -chdir=infra/bootstrap init -upgrade && terraform -chdir=infra/bootstrap apply
         cp infra/bootstrap/terraform.tfstate ~/mcp-azure-companygraph-io-bootstrap.tfstate
 
-
 5. At Hostpoint, add the two records the deployment names for `mcp.azure.companygraph.io`: the CNAME to the app's host, and the `asuid` TXT with the verification id, read from the app rather than from the state, because an owner's login carries no right on the state's blobs:
 
         az containerapp show -g mcp-azure-companygraph-io -n mcp --query properties.configuration.ingress.fqdn -o tsv

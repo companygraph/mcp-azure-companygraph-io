@@ -1,6 +1,6 @@
 # mcp.azure.companygraph.io
 
-CompanyGraph's own model, `companygraph/mental-model`, served over MCP at `https://mcp.azure.companygraph.io/mcp` from Azure. It is the model `mcp.companygraph.io` serves, at the same commit, so a question asked of either host gets the same answer from the same facts; what differs is the cloud underneath. This repository pins that commit and one release of `companygraph/mcp-server`, builds an image that carries the model's snapshot, and runs it as a Container App in Switzerland North. Everything in the resource group is Terraform: the bootstrap's part applied once by the owner, the rest by GitHub Actions on every merge.
+CompanyGraph's own model, `companygraph/mental-model`, served over MCP at `https://mcp.azure.companygraph.io/mcp` from Azure. It is the model `mcp.companygraph.io` serves, each host at the commit it pins, so a question asked of either host is answered from the same facts; what differs is the cloud underneath. This repository pins that commit and one release of `companygraph/mcp-server`, builds an image that carries the model's snapshot, and runs it as a Container App in Switzerland North. Everything in the resource group is Terraform: the bootstrap's part applied once by the owner, the rest by GitHub Actions on every merge.
 
 It is the first deployment of the server on Azure, and the proof of the design in `companygraph/chat-server`'s [The servers run on two clouds](https://github.com/companygraph/chat-server/blob/main/docs/superpowers/specs/2026-09-28-the-servers-run-on-two-clouds-design.md): the server's modules under `deploy/azure/` were written and validated before any subscription existed, and this deployment is where they first meet a real one. It is built entirely from the parts the server ships under `deploy/`: the Terraform modules, the build command, the shared tests and the workflow. What is this deployment's own is its values in `deployment.json`, its brand, its page styles and its instance tests.
 
@@ -17,11 +17,11 @@ Add `https://mcp.azure.companygraph.io/mcp` as a custom connector in Claude, or 
     npm ci
     npm run snapshot      # writes dist/snapshot.json from the pinned commit
     npm run page-css      # writes dist/page.css from the design package's blocks and own.css
-    npm run jsonld        # writes nothing here: the model's MCP surface is mcp.companygraph.io's
+    npm run jsonld        # writes dist/jsonld.json from the surface the model names for this host
     npm test              # the server's shared deployment tests and this instance's own
     docker build -t mcp-azure-companygraph-io:local .
 
-The page carries no structured data on purpose. The model names one MCP surface, built by `companygraph/mcp-companygraph-io`, and a host that claimed it would tell a crawler the sibling's address was its own; the instance test holds that this host claims none.
+The page carries structured data because the model names this host: a surface built by this repository, at this domain, from which the build writes the organization and the endpoint a crawler is told, and the instance test holds what it wrote to the model field by field, as the sibling's does.
 
 ## Infrastructure
 

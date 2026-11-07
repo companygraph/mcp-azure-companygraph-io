@@ -1,0 +1,18 @@
+{
+  "domain": "chat.azure.companygraph.io",
+  "mcp_url": "https://mcp.azure.companygraph.io/mcp",
+  "origins": [
+    "https://companygraph.io"
+  ],
+  "month_tokens": 18500000,
+  "provider": "anthropic",
+  "inference_geo": "global",
+  "storage_account": "chatazurecompanygraphio",
+  "anthropic_federation": {
+    "rule_id": "fdrl_017iBmuqfh7jWjjMMpRjGEBr",
+    "organization_id": "f48c0dfd-3bf9-4c7b-837c-254f7ba27923",
+    "service_account_id": "svac_017XvZZdGsnGV2yQmJABgxyY",
+    "workspace_id": "wrkspc_01A9iwwm2pEGTgsNAWHsu4ni",
+    "audience": "956bbc82-da6b-4741-9393-1d1691f6ffb6"
+  }
+}

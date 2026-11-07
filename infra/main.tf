@@ -48,6 +48,12 @@ module "mcp" {
 
 output "service_url" { value = module.mcp.service_url }
 output "app_host" { value = module.mcp.app_host }
-output "dns_records" { value = module.mcp.dns_records }
+# The verification id in the TXT record is a value azurerm marks sensitive, and Terraform refuses
+# a root output carrying one unless it says so; the records are read with az containerapp show,
+# as the README says, so the output stays for the apply log and nothing reads it as plain text.
+output "dns_records" {
+  value     = module.mcp.dns_records
+  sensitive = true
+}
 output "environment_name" { value = module.mcp.environment_name }
 output "logs_workspace_name" { value = module.mcp.logs_workspace_name }

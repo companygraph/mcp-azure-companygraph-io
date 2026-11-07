@@ -43,6 +43,7 @@ updates:
       interval: "weekly"
     ignore:
       - dependency-name: "*companygraph/mcp-server*"
+      - dependency-name: "*companygraph/chat-server*"
       - dependency-name: "*robertblust/conventions*"
     groups:
       actions:

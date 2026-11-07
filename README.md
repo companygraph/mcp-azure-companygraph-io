@@ -67,3 +67,7 @@ The record of how the deployment was stood up: the owner's steps, done once, in 
 ## The chat
 
 `chat.azure.companygraph.io` is the next pull request in this repository: `companygraph/chat-server` deployed beside the host in the same Container Apps environment, as `chat.companygraph.io` sits beside `mcp.companygraph.io`. It asks four steps of the owner that the host does not, once per tenant or once per deployment: an app registration in the tenant that stands for the Claude API, a federation issuer for the tenant and a rule for the chat's identity in the Anthropic Console, and the domain's records. The chat server's README, under *Deploying it on Azure*, says what each is and why the chat holds no key.
+
+## License
+
+CC BY 4.0 for the text here; the model's own license is its own.

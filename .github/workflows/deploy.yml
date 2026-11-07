@@ -1,0 +1,20 @@
+# The build, the plan and the apply are the server's own, called by the release package.json
+# pins, and they are its Azure ones: the image goes to the bootstrap's registry and the
+# Terraform applies as the identities the bootstrap made. This deployment's values reach them
+# from deployment.json.
+name: deploy
+on:
+  push:
+    branches: [main]
+  pull_request:
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  deploy:
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+    uses: companygraph/mcp-server/.github/workflows/deploy-azure.yml@v0.74.0
+    secrets: inherit

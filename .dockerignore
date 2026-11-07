@@ -1,0 +1,8 @@
+node_modules
+.git
+.github
+.superpowers
+docs
+infra
+test
+dist/server.json

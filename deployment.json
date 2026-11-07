@@ -1,0 +1,15 @@
+{
+  "platform": "azure",
+  "tenant_id": "abf3b666-232b-4117-ae44-557e6b1a3341",
+  "subscription_id": "fde0a7c3-6f5a-4fe3-a7d5-2b33b67aea80",
+  "resource_group": "mcp-azure-companygraph-io",
+  "location": "switzerlandnorth",
+  "container_registry": "mcpazurecompanygraphio",
+  "state_account": "mcpazurecompanygraphio",
+  "domain": "mcp.azure.companygraph.io",
+  "budget_chf": 40,
+  "budget_start": "2026-11-01",
+  "repository": "companygraph/mcp-azure-companygraph-io",
+  "repository_id": "1449054367",
+  "owner_id": "320206107"
+}

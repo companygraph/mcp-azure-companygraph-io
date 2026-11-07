@@ -35,7 +35,7 @@ provider "azapi" {
 # app_host and dns_ready are absent until the first apply has named the host and the owner has
 # set the domain's records, so each is read with the default the module gives it.
 module "mcp" {
-  source              = "git::https://github.com/companygraph/mcp-server.git//deploy/azure/terraform?ref=v0.74.1"
+  source              = "git::https://github.com/companygraph/mcp-server.git//deploy/azure/terraform?ref=v0.75.0"
   resource_group_name = local.d.resource_group
   registry_name       = local.d.container_registry
   domain              = local.d.domain

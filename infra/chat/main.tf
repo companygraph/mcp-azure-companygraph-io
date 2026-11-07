@@ -36,7 +36,7 @@ provider "azapi" {
 # app_host and dns_ready are absent until the first apply has named the host and the owner has
 # set the domain's records, so each is read with the default the module gives it.
 module "chat" {
-  source               = "git::https://github.com/companygraph/chat-server.git//deploy/azure/terraform?ref=v0.40.1"
+  source               = "git::https://github.com/companygraph/chat-server.git//deploy/azure/terraform?ref=v0.40.2"
   resource_group_name  = local.d.resource_group
   registry_name        = local.d.container_registry
   domain               = local.c.domain

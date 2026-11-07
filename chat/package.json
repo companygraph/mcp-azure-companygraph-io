@@ -12,7 +12,7 @@
     "test": "node --test 'test/*.test.mjs'"
   },
   "dependencies": {
-    "companygraph-chat-server": "github:companygraph/chat-server#v0.40.2"
+    "companygraph-chat-server": "github:companygraph/chat-server#v0.41.0"
   },
   "devDependencies": {
     "@robertblust/design": "github:robertblust/design#v0.162.0",

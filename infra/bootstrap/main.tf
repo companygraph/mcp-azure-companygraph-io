@@ -23,7 +23,7 @@ provider "azurerm" {
   resource_provider_registrations = "none"
   resource_providers_to_register = [
     "Microsoft.App", "Microsoft.OperationalInsights", "Microsoft.ContainerRegistry", "Microsoft.Storage",
-    "Microsoft.ManagedIdentity", "Microsoft.Insights", "Microsoft.Consumption",
+    "Microsoft.ManagedIdentity", "Microsoft.Insights", "Microsoft.Consumption", "Microsoft.KeyVault",
   ]
 }
 

@@ -37,7 +37,7 @@ provider "azapi" {
 # set the domain's records, so each is read with the default the module gives it; sign_in and
 # user_month_tokens are absent until the reader secret is in the vault, and read as null.
 module "chat" {
-  source               = "git::https://github.com/companygraph/chat-server.git//deploy/azure/terraform?ref=v0.41.0"
+  source               = "git::https://github.com/companygraph/chat-server.git//deploy/azure/terraform?ref=v0.42.0"
   resource_group_name  = local.d.resource_group
   registry_name        = local.d.container_registry
   domain               = local.c.domain

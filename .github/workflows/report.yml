@@ -1,0 +1,16 @@
+# The week's report of the chat's questions, written on Monday morning by companygraph/chat-server's
+# own workflow at the release chat/package.json pins, acting as this deployment's chat-analyst.
+# The report covers the ISO week that ended and rewrites the same file however the schedule
+# drifts; a run started by hand rebuilds the week that ended. The log here carries counts and
+# never a question.
+name: report
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+jobs:
+  report:
+    permissions:
+      contents: read
+      id-token: write
+    uses: companygraph/chat-server/.github/workflows/report-azure.yml@v0.40.0

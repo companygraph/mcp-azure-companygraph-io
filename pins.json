@@ -1,9 +1,40 @@
 {
   "pins": [
-    { "kind": "conventions", "file": "conventions.json", "repo": "robertblust/conventions" },
-    { "kind": "npm-tag", "file": "package.json", "repo": "companygraph/mcp-server", "move": "grep -rlE 'companygraph/mcp-server[^[:space:]\"]*(#|@|\\?ref=)v[0-9]+\\.[0-9]+\\.[0-9]+' package.json .github/workflows infra | xargs perl -pi -e 's~(companygraph/mcp-server[^\\s\"]*?(?:#|@|\\?ref=))v\\d+\\.\\d+\\.\\d+~${1}{version}~g' && node -e \"const fs=require('fs');const l=JSON.parse(fs.readFileSync('package-lock.json'));const suffix='node_modules/companygraph-meta-model';for(const k of Object.keys(l.packages)){if(k===suffix||k.endsWith('/'+suffix)){delete l.packages[k];fs.rmSync(k,{recursive:true,force:true})}}fs.writeFileSync('package-lock.json',JSON.stringify(l,null,2)+'\\n')\" && npm install" },
-    { "kind": "npm-tag", "file": "package.json", "repo": "robertblust/design" },
-    { "kind": "source-commit", "file": "source.json", "repo": "companygraph/mental-model" }
+    {
+      "kind": "conventions",
+      "file": "conventions.json",
+      "repo": "robertblust/conventions"
+    },
+    {
+      "kind": "npm-tag",
+      "file": "package.json",
+      "repo": "companygraph/mcp-server",
+      "move": "grep -rlE 'companygraph/mcp-server[^[:space:]\"]*(#|@|\\?ref=)v[0-9]+\\.[0-9]+\\.[0-9]+' package.json .github/workflows infra | xargs perl -pi -e 's~(companygraph/mcp-server[^\\s\"]*?(?:#|@|\\?ref=))v\\d+\\.\\d+\\.\\d+~${1}{version}~g' && node -e \"const fs=require('fs');const l=JSON.parse(fs.readFileSync('package-lock.json'));const suffix='node_modules/companygraph-meta-model';for(const k of Object.keys(l.packages)){if(k===suffix||k.endsWith('/'+suffix)){delete l.packages[k];fs.rmSync(k,{recursive:true,force:true})}}fs.writeFileSync('package-lock.json',JSON.stringify(l,null,2)+'\\n')\" && npm install"
+    },
+    {
+      "kind": "npm-tag",
+      "file": "package.json",
+      "repo": "robertblust/design"
+    },
+    {
+      "kind": "npm-tag",
+      "file": "chat/package.json",
+      "repo": "companygraph/chat-server",
+      "move": "grep -rlE 'companygraph/chat-server[^[:space:]\"]*(#|@|\\?ref=)v[0-9]+\\.[0-9]+\\.[0-9]+' chat/package.json .github/workflows infra | xargs perl -pi -e 's~(companygraph/chat-server[^\\s\"]*?(?:#|@|\\?ref=))v\\d+\\.\\d+\\.\\d+~${1}{version}~g' && npm install --prefix chat"
+    },
+    {
+      "kind": "npm-tag",
+      "file": "chat/package.json",
+      "repo": "robertblust/design",
+      "after": [
+        "npm install --prefix chat"
+      ]
+    },
+    {
+      "kind": "source-commit",
+      "file": "source.json",
+      "repo": "companygraph/mental-model"
+    }
   ],
   "verify": [
     "npm ci",
@@ -12,6 +43,10 @@
     "npm run jsonld",
     "npx playwright install --with-deps chromium",
     "npm test",
-    "docker build -t mcp-azure-companygraph-io:local ."
+    "docker build -t mcp-azure-companygraph-io:local .",
+    "npm ci --prefix chat",
+    "npm run page-css --prefix chat",
+    "npm test --prefix chat",
+    "docker build -t mcp-azure-companygraph-io-chat:local chat"
   ]
 }

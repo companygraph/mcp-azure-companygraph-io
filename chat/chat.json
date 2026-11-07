@@ -11,6 +11,7 @@
   "app_host": "chat.mangopebble-94d2e29d.switzerlandnorth.azurecontainerapps.io",
   "questions_workspace_id": "19573510-07b7-47b5-976f-90cfb59e9e8b",
   "analyst_client_id": "7a298435-fe97-413c-8daa-a055fbf8e0ad",
+  "dns_ready": true,
   "anthropic_federation": {
     "rule_id": "fdrl_017iBmuqfh7jWjjMMpRjGEBr",
     "organization_id": "f48c0dfd-3bf9-4c7b-837c-254f7ba27923",

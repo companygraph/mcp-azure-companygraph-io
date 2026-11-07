@@ -1,0 +1,72 @@
+# Four ecosystems, one rule: a bump is gated by the real check. deploy.yml runs the snapshot,
+# the tests and the image build on every pull request, and plans the infrastructure, so a
+# release that breaks any of them goes red before it can be merged.
+#
+# The server pin is editorial. package.json takes companygraph-mcp-server by tag, and
+# Dependabot reads a tag pin, so the group below exists to keep that one pull request apart
+# from the rest: it is read, never merged on sight, because a server release changes what the
+# image serves. The same tag is also pinned by the workflows' uses: lines and by the module
+# source in infra/, and a bump of any one of the three alone fails the pin test, so the other
+# two ecosystems ignore the server and a server release is re-pinned by hand in all three. The
+# model pin in source.json is a commit and Dependabot never sees it.
+#
+# The shape is copied from blust.ch, deliberately.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    # Family pins move with the resync, never with Dependabot: conventions/PINS.md, Dependabot.
+    ignore:
+      - dependency-name: "companygraph-mcp-server"
+      - dependency-name: "@robertblust/design"
+    schedule:
+      interval: "weekly"
+    # Zero, stated, because Dependabot applies three days when the key is absent and then offers
+    # the highest release older than that — for a package pinned by tag and released more than
+    # once a week, a DOWNGRADE. With zero it sees the pinned release and proposes nothing.
+    cooldown:
+      default-days: 0
+    groups:
+      # First on purpose: Dependabot puts a dependency in the FIRST group it matches. A pull
+      # request from this group proposing a LOWER version is closed, never merged.
+      mcp-server:
+        patterns:
+          - "companygraph-mcp-server"
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*companygraph/mcp-server*"
+      - dependency-name: "*robertblust/conventions*"
+    groups:
+      actions:
+        patterns:
+          - "*"
+
+  # The node image in the Dockerfile. A major here is a Node major, which is the one image bump
+  # that has to be read against the server's engines field.
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # The two Terraform roots and their committed lockfiles. A provider bump is a pull request
+  # that CI plans, so its effect on the live infrastructure is visible before it merges.
+  - package-ecosystem: "terraform"
+    directory: "/infra"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*companygraph/mcp-server*"
+  - package-ecosystem: "terraform"
+    directory: "/infra/bootstrap"
+    schedule:
+      interval: "weekly"
+    ignore:
+      - dependency-name: "*companygraph/mcp-server*"

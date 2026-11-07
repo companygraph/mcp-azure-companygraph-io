@@ -1,0 +1,12 @@
+# mcp.azure.companygraph.io
+#
+# One page and one endpoint, both meant to be found. No sitemap line, for the reason
+# mcp.blust.ch's robots.txt gives: a sitemap enumerating one URL that the rule below already
+# allows is a second file to keep in step for nothing.
+#
+# /mcp answers POST and returns 405 to a crawler's GET. That is an answer rather than a wall, so
+# it is not disallowed: a rule forbidding the address this server is published under would be
+# the page disagreeing with itself.
+
+User-agent: *
+Allow: /

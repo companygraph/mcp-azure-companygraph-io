@@ -33,15 +33,6 @@ provider "azapi" {
   subscription_id = local.d.subscription_id
 }
 
-# The chat's identity is made by hand before the first apply, because the rule at Anthropic that
-# lets the chat federate names its object id and chat.json names that rule before the first
-# apply. This adopts it; the block goes with the pull request that writes app_host, once the
-# module owns the identity.
-import {
-  to = module.chat.azurerm_user_assigned_identity.run
-  id = "/subscriptions/fde0a7c3-6f5a-4fe3-a7d5-2b33b67aea80/resourceGroups/mcp-azure-companygraph-io/providers/Microsoft.ManagedIdentity/userAssignedIdentities/chat-run"
-}
-
 # app_host and dns_ready are absent until the first apply has named the host and the owner has
 # set the domain's records, so each is read with the default the module gives it.
 module "chat" {

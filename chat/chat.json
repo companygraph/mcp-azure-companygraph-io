@@ -18,5 +18,12 @@
     "service_account_id": "svac_017XvZZdGsnGV2yQmJABgxyY",
     "workspace_id": "wrkspc_01A9iwwm2pEGTgsNAWHsu4ni",
     "audience": "956bbc82-da6b-4741-9393-1d1691f6ffb6"
-  }
+  },
+  "sign_in": {
+    "issuer": "https://id.blust.ch",
+    "project_id": "396565550420994416",
+    "org_id": "396565550404217200",
+    "client_id": "396565550655875440"
+  },
+  "user_month_tokens": 5000000
 }

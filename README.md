@@ -46,9 +46,14 @@ The record of how the deployment was stood up: the owner's steps, done once, in 
         terraform -chdir=infra/bootstrap output
         az provider register -n Microsoft.Insights --wait
 
-3. Merge the pull request. The first deploy fails at the live check, and its `app_host` warning names the host; write it into `deployment.json` as `app_host` and merge that.
+3. Write the empty state before the first pull request plans. The azurerm backend writes an empty state blob when it finds none for the workspace, and `terraform-plan` holds Storage Blob Data Reader on the container, which cannot create one, so a pull request on Azure cannot plan until the state exists. An owner on the subscription holds no right on the container's blobs either, so the owner takes Storage Blob Data Contributor on that container once, which also lets them read the state later, and runs the init that writes the blob; the role took a few minutes to reach the data plane:
 
-4. At Hostpoint, add the two records the deployment names for `mcp.azure.companygraph.io`: the CNAME to the app's host, and the `asuid` TXT with the verification id, read from the app rather than from the state, because an owner's login carries no right on the state's blobs:
+        az role assignment create --assignee "$(az ad signed-in-user show --query id -o tsv)" --role "Storage Blob Data Contributor" --scope "/subscriptions/fde0a7c3-6f5a-4fe3-a7d5-2b33b67aea80/resourceGroups/mcp-azure-companygraph-io/providers/Microsoft.Storage/storageAccounts/mcpazurecompanygraphio/blobServices/default/containers/tfstate"
+        terraform -chdir=infra init -input=false
+
+4. Merge the pull request. The first deploy fails at the live check, and its `app_host` warning names the host; write it into `deployment.json` as `app_host` and merge that.
+
+5. At Hostpoint, add the two records the deployment names for `mcp.azure.companygraph.io`: the CNAME to the app's host, and the `asuid` TXT with the verification id, read from the app rather than from the state, because an owner's login carries no right on the state's blobs:
 
         az containerapp show -g mcp-azure-companygraph-io -n mcp --query properties.configuration.ingress.fqdn -o tsv
         az containerapp show -g mcp-azure-companygraph-io -n mcp --query properties.customDomainVerificationId -o tsv

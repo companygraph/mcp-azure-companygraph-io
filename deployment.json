@@ -11,5 +11,8 @@
   "budget_start": "2026-11-01",
   "repository": "companygraph/mcp-azure-companygraph-io",
   "repository_id": "1449054367",
-  "owner_id": "320206107"
+  "owner_id": "320206107",
+  "terraform_client_id": "b24316b3-e0fd-41fe-85e2-c95b0bec678a",
+  "plan_client_id": "e19fe8ec-09ac-44ca-884b-cae0e94fff2e",
+  "deploy_client_id": "c0652de1-2c5d-4090-b502-2cd880551fa2"
 }

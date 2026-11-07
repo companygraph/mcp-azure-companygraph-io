@@ -1,0 +1,16 @@
+# A throwaway: prints the subject GitHub signs into this repository's OIDC token, so it can be
+# read against the subject the bootstrap's credentials trust before the first deploy. A subject
+# is not a secret. Removed before the pull request merges.
+name: oidc-subject
+on:
+  pull_request:
+jobs:
+  subject:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - run: |
+          TOKEN=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=api://AzureADTokenExchange" | jq -r .value)
+          echo "$TOKEN" | cut -d. -f2 | tr '_-' '/+' | awk '{ while (length($0) % 4) $0 = $0 "="; print }' | base64 -d | jq -r '.sub, .iss, .aud'

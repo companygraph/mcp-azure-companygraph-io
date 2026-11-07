@@ -15,5 +15,6 @@
   "terraform_client_id": "b24316b3-e0fd-41fe-85e2-c95b0bec678a",
   "plan_client_id": "e19fe8ec-09ac-44ca-884b-cae0e94fff2e",
   "deploy_client_id": "c0652de1-2c5d-4090-b502-2cd880551fa2",
-  "app_host": "mcp.mangopebble-94d2e29d.switzerlandnorth.azurecontainerapps.io"
+  "app_host": "mcp.mangopebble-94d2e29d.switzerlandnorth.azurecontainerapps.io",
+  "dns_ready": true
 }

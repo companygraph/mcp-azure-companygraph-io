@@ -34,9 +34,10 @@ provider "azapi" {
 }
 
 # app_host and dns_ready are absent until the first apply has named the host and the owner has
-# set the domain's records, so each is read with the default the module gives it.
+# set the domain's records, so each is read with the default the module gives it; sign_in and
+# user_month_tokens are absent until the reader secret is in the vault, and read as null.
 module "chat" {
-  source               = "git::https://github.com/companygraph/chat-server.git//deploy/azure/terraform?ref=v0.40.2"
+  source               = "git::https://github.com/companygraph/chat-server.git//deploy/azure/terraform?ref=v0.41.0"
   resource_group_name  = local.d.resource_group
   registry_name        = local.d.container_registry
   domain               = local.c.domain
@@ -52,6 +53,8 @@ module "chat" {
   image                = var.image
   app_host             = lookup(local.c, "app_host", "")
   dns_ready            = lookup(local.c, "dns_ready", false)
+  sign_in              = try(local.c.sign_in, null)
+  user_month_tokens    = try(local.c.user_month_tokens, null)
 }
 
 output "service_url" { value = module.chat.service_url }

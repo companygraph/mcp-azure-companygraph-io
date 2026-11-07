@@ -51,15 +51,23 @@ The record of how the deployment was stood up: the owner's steps, done once, in 
         az role assignment create --assignee "$(az ad signed-in-user show --query id -o tsv)" --role "Storage Blob Data Contributor" --scope "/subscriptions/fde0a7c3-6f5a-4fe3-a7d5-2b33b67aea80/resourceGroups/mcp-azure-companygraph-io/providers/Microsoft.Storage/storageAccounts/mcpazurecompanygraphio/blobServices/default/containers/tfstate"
         terraform -chdir=infra init -input=false
 
-4. Merge the pull request. The first deploy fails at the live check, and its `app_host` warning names the host; write it into `deployment.json` as `app_host` and merge that.
+4. Merge the pull request. The first deploy fails at the live check, and its `app_host` warning names the host; write it into `deployment.json` as `app_host` and open the pull request for it. That pull request's plan was the first to refresh the container app as `terraform-plan`, and it failed on `Microsoft.App/containerApps/listSecrets/action`, which Reader lacks; the server released 0.74.1 with a custom role of Reader plus that action, this deployment re-pinned it in its three places on the same branch, and the bootstrap was re-applied, after restoring its state from the copy, replacing the one role assignment. Then the plan passed and the merge's live check read the pinned commit:
+
+        cp ~/mcp-azure-companygraph-io-bootstrap.tfstate infra/bootstrap/terraform.tfstate
+        terraform -chdir=infra/bootstrap init -upgrade && terraform -chdir=infra/bootstrap apply
+        cp infra/bootstrap/terraform.tfstate ~/mcp-azure-companygraph-io-bootstrap.tfstate
 
 5. At Hostpoint, add the two records the deployment names for `mcp.azure.companygraph.io`: the CNAME to the app's host, and the `asuid` TXT with the verification id, read from the app rather than from the state, because an owner's login carries no right on the state's blobs:
 
         az containerapp show -g mcp-azure-companygraph-io -n mcp --query properties.configuration.ingress.fqdn -o tsv
         az containerapp show -g mcp-azure-companygraph-io -n mcp --query properties.customDomainVerificationId -o tsv
 
-    Once both resolve, set `"dns_ready": true` in `deployment.json` and merge that; the apply adds the domain and its certificate.
+    Once both resolved at Cloudflare, Google and Hostpoint's own name server, `deployment.json` said `"dns_ready": true` and the merge's apply added the domain, issued the certificate and bound it on its first run; `https://mcp.azure.companygraph.io/mcp` answered the pinned commit from then on.
 
 ## The chat
 
 `chat.azure.companygraph.io` is the next pull request in this repository: `companygraph/chat-server` deployed beside the host in the same Container Apps environment, as `chat.companygraph.io` sits beside `mcp.companygraph.io`. It asks four steps of the owner that the host does not, once per tenant or once per deployment: an app registration in the tenant that stands for the Claude API, a federation issuer for the tenant and a rule for the chat's identity in the Anthropic Console, and the domain's records. The chat server's README, under *Deploying it on Azure*, says what each is and why the chat holds no key.
+
+## License
+
+CC BY 4.0 for the text here; the model's own license is its own.

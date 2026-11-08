@@ -17,5 +17,5 @@ jobs:
       contents: read
       id-token: write
       pull-requests: write
-    uses: companygraph/chat-server/.github/workflows/deploy-azure.yml@v0.42.0
+    uses: companygraph/chat-server/.github/workflows/deploy-azure.yml@v0.44.0
     secrets: inherit

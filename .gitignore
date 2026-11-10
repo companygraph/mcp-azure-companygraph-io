@@ -13,3 +13,5 @@ dist/
 .terraform/
 *.tfstate*
 *.pem
+# A tool's local settings can hold a secret; conventions-sync keeps the lines below.
+**/.claude/settings.local.json

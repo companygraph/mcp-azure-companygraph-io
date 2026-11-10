@@ -15,7 +15,7 @@
     "companygraph-chat-server": "github:companygraph/chat-server#v0.44.0"
   },
   "devDependencies": {
-    "@robertblust/design": "github:robertblust/design#v0.163.0",
+    "@robertblust/design": "github:robertblust/design#v0.164.0",
     "playwright": "^1.63.0"
   }
 }

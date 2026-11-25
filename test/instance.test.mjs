@@ -5,8 +5,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import { getEntity } from "companygraph-mcp-server/model";
-import { jsonld } from "companygraph-mcp-server/deploy";
+import { getEntity } from "@companygraph/mcp-server/model";
+import { jsonld } from "@companygraph/mcp-server/deploy";
 
 const s = JSON.parse(fs.readFileSync(path.join(process.cwd(), "dist/snapshot.json"), "utf8"));
 

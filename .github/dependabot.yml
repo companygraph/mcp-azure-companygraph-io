@@ -2,8 +2,8 @@
 # the tests and the image build on every pull request, and plans the infrastructure, so a
 # release that breaks any of them goes red before it can be merged.
 #
-# The server pin is editorial. package.json takes companygraph-mcp-server by tag, and
-# Dependabot reads a tag pin, so the group below exists to keep that one pull request apart
+# The server pin is editorial. package.json takes @companygraph/mcp-server from npm at an exact
+# version, and Dependabot reads one, so the group below exists to keep that one pull request apart
 # from the rest: it is read, never merged on sight, because a server release changes what the
 # image serves. The same tag is also pinned by the workflows' uses: lines and by the module
 # source in infra/, and a bump of any one of the three alone fails the pin test, so the other
@@ -17,7 +17,7 @@ updates:
     directory: "/"
     # Family pins move with the resync, never with Dependabot: conventions/PINS.md, Dependabot.
     ignore:
-      - dependency-name: "companygraph-mcp-server"
+      - dependency-name: "@companygraph/mcp-server"
       - dependency-name: "@robertblust/design"
     schedule:
       interval: "weekly"
@@ -31,7 +31,7 @@ updates:
       # request from this group proposing a LOWER version is closed, never merged.
       mcp-server:
         patterns:
-          - "companygraph-mcp-server"
+          - "@companygraph/mcp-server"
       minor-and-patch:
         update-types:
           - "minor"
